@@ -9,8 +9,8 @@ function App() {
     title: '',
     author: '',
     publisher: '',
-    number_of_copies: '',
-    price: ''
+    numberofCopies: '',
+    Price: ''
   });
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function App() {
 
   const fetchCatalogues = async () => {
     try {
-      const response = await axios.get('/api/catalogues');
+      const response = await axios.get('/api/get');
       setCatalogues(response.data);
     } catch (error) {
       console.error('Error fetching catalogues:', error);
@@ -34,15 +34,15 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/catalogues', formData);
+      await axios.post('/api/post', formData);
       fetchCatalogues();
       setShowForm(false);
       setFormData({
         title: '',
         author: '',
         publisher: '',
-        number_of_copies: '',
-        price: ''
+        numberofCopies: '',
+        Price: ''
       });
     } catch (error) {
       console.error('Error adding catalogue:', error);
@@ -51,7 +51,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/catalogues/${id}`);
+      await axios.delete(`/api/delete/${id}`);
       fetchCatalogues();
     } catch (error) {
       console.error('Error deleting catalogue:', error);
@@ -60,15 +60,22 @@ function App() {
 
   const handleUpdate = async (id) => {
     try {
-      await axios.put(`/api/catalogues/${id}`, formData);
+      const updatedFormData = {
+        title: formData.title,
+        author: formData.author,
+        publisher: formData.publisher,
+        numberofCopies: formData.numberofCopies,
+        Price: formData.Price
+      };
+      await axios.put(`/api/update/${id}`, updatedFormData);
       fetchCatalogues();
       setShowForm(false);
       setFormData({
         title: '',
         author: '',
         publisher: '',
-        number_of_copies: '',
-        price: ''
+        numberofCopies: '',
+        Price: ''
       });
     } catch (error) {
       console.error('Error updating catalogue:', error);
@@ -103,16 +110,16 @@ function App() {
           />
           <input
             type="number"
-            name="number_of_copies"
+            name="numberofCopies"
             placeholder="Number of Copies"
-            value={formData.number_of_copies}
+            value={formData.numberofCopies}
             onChange={handleInputChange}
           />
           <input
             type="number"
-            name="price"
+            name="Price"
             placeholder="Price"
-            value={formData.price}
+            value={formData.Price}
             onChange={handleInputChange}
           />
           <button type="submit">Submit</button>
@@ -124,8 +131,8 @@ function App() {
             <h3>{catalogue.title}</h3>
             <p>Author: {catalogue.author}</p>
             <p>Publisher: {catalogue.publisher}</p>
-            <p>Number of Copies: {catalogue.number_of_copies}</p>
-            <p>Price: {catalogue.price}</p>
+            <p>Number of Copies: {catalogue.numberofCopies}</p>
+            <p>Price: {catalogue.Price}</p>
             <button onClick={() => handleDelete(catalogue._id)}>Delete</button>
             <button onClick={() => handleUpdate(catalogue._id)}>Update</button>
           </div>
