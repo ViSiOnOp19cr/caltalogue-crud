@@ -9,7 +9,7 @@ user.post('/post',(req,res)=>{
         author,
         publisher,
         numberofCopies,
-        Price
+
     });
     newModel.save().then(()=>{
         res.json('Data added');
@@ -40,7 +40,7 @@ user.delete('/delete/:id',(req,res)=>{
 )
 user.put('/update/:id',(req,res)=>{
     const id = req.params.id;
-    const {title,author,publisher,numberofCopies,Price} = req.body;
+    const {title,author,publisher,numberofCopies} = req.body;
     Model.findByIdAndUpdate({
         _id:id
     },{
@@ -48,7 +48,7 @@ user.put('/update/:id',(req,res)=>{
         author,
         publisher,
         numberofCopies,
-        Price
+
     }).then(()=>{
         res.json('Data updated');
     }).catch((err)=>{

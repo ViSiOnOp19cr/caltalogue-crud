@@ -5,6 +5,6 @@ const catalugueSchema = new Schema({
     author:String,
     publisher:String,
     numberofCopies:Number,
-    Price:Number
+
 });
 export const Model  = mongoose.model('catalogue',catalugueSchema);
